@@ -50,17 +50,20 @@ public class BattleMapCoordsTableModel extends AbstractTableModel {
     public void updateProperties() {
         List<BattleMapCoords> entries = new ArrayList<>();
         for(Integer[] entry : tableData){
-            if(entry[0] != null && entry[1] != null
-                    && entry[2] != null && entry[3] != null
-                    && entry[4] != null && entry[5] != null
-                    && entry[6] != null ){
+            if(entry[0] != null){
                 BattleMapCoords coordsEntry = new BattleMapCoords();
                 coordsEntry.setMap(entry[0]);
+                if(entry[1]==null){entry[1]=0;}
                 coordsEntry.setX(entry[1]);
+                if(entry[2]==null){entry[2]=0;}
                 coordsEntry.setY(entry[2]);
+                if(entry[3]==null){entry[3]=63;}
                 coordsEntry.setWidth(entry[3]);
+                if(entry[4]==null){entry[4]=63;}
                 coordsEntry.setHeight(entry[4]);
+                if(entry[5]==null){entry[5]=-1;}
                 coordsEntry.setTrigX(entry[5]);
+                if(entry[6]==null){entry[6]=-1;}
                 coordsEntry.setTrigY(entry[6]);           
                 entries.add(coordsEntry);
             }
@@ -82,10 +85,12 @@ public class BattleMapCoordsTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
         tableData[row][col] = (Integer)value;
         updateProperties();
-        layout.setCoords(coords[row]);
-        layout.updateCoordsDisplay();
-        layout.revalidate();
-        layout.repaint();
+        if(row<coords.length){
+            layout.setCoords(coords[row]);
+            layout.updateCoordsDisplay();
+            layout.revalidate();
+            layout.repaint();
+        }
     }    
  
     @Override

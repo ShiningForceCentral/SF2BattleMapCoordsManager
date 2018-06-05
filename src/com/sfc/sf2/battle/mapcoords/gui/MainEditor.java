@@ -566,14 +566,16 @@ public class MainEditor extends javax.swing.JFrame {
                     System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
                     selectedRow = jTable1.getSelectedRow();
                     selectedCoords = selectedRow;
-                    selectedMapIndex = (int)jTable1.getValueAt(selectedRow, 0);
-                    mapLayoutManager.importDisassembly(jTextField21.getText(), jTextField22.getText(), mapEntries[selectedMapIndex][0], mapEntries[selectedMapIndex][1], mapEntries[selectedMapIndex][2]);
-                    battlemapcoordsLayout.setMapLayout(mapLayoutManager.getLayout());
-                    battlemapcoordsLayout.setBlockset(mapLayoutManager.getBlockset());
-                    battlemapcoordsLayout.setCoords(coords[selectedCoords]);
-                    battlemapcoordsLayout.updateCoordsDisplay();
-                    jPanel2.validate();
-                    jPanel2.repaint(); 
+                    if(jTable1.getValueAt(selectedRow, 0)!=null){
+                        selectedMapIndex = (int)jTable1.getValueAt(selectedRow, 0);
+                        mapLayoutManager.importDisassembly(jTextField21.getText(), jTextField22.getText(), mapEntries[selectedMapIndex][0], mapEntries[selectedMapIndex][1], mapEntries[selectedMapIndex][2]);
+                        battlemapcoordsLayout.setMapLayout(mapLayoutManager.getLayout());
+                        battlemapcoordsLayout.setBlockset(mapLayoutManager.getBlockset());
+                        battlemapcoordsLayout.setCoords(((BattleMapCoordsTableModel)jTable1.getModel()).getCoords()[selectedCoords]);
+                        battlemapcoordsLayout.updateCoordsDisplay();
+                        jPanel2.validate();
+                        jPanel2.repaint(); 
+                    }
                 }
                 
                 

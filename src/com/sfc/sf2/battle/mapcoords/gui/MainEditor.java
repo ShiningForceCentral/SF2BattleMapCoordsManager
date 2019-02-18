@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.ConsoleHandler;
@@ -43,15 +44,19 @@ public class MainEditor extends javax.swing.JFrame {
      * Creates new form NewApplication
      */
     public MainEditor() {
-        initComponents();
-        initConsole(jTextArea1);
-        System.setProperty("java.util.logging.SimpleFormatter.format", 
-            "%2$s - %5$s%6$s%n");        
-        initLogger("com.sfc.sf2.graphics", Level.WARNING);        
-        File workingDirectory = new File(MainEditor.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        System.setProperty("user.dir", workingDirectory.getParent());
-        jFileChooser1.setCurrentDirectory(workingDirectory);
-        jFileChooser2.setCurrentDirectory(workingDirectory); 
+        try {
+            initComponents();
+            initConsole(jTextArea1);
+            System.setProperty("java.util.logging.SimpleFormatter.format",
+                    "%2$s - %5$s%6$s%n");
+            initLogger("com.sfc.sf2.graphics", Level.WARNING);
+            File workingDirectory = new File(MainEditor.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
+            System.setProperty("user.dir", workingDirectory.toString());
+            jFileChooser1.setCurrentDirectory(workingDirectory); 
+            jFileChooser2.setCurrentDirectory(workingDirectory);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(MainEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void initLogger(String name, Level level){
@@ -187,7 +192,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel20.setText("Map entries :");
 
-        jTextField19.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\maps\\entries\\mapentries.asm");
+        jTextField19.setText("..\\..\\maps\\entries.asm");
         jTextField19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField19ActionPerformed(evt);
@@ -203,7 +208,7 @@ public class MainEditor extends javax.swing.JFrame {
 
         jLabel21.setText("Battle Map Coords :");
 
-        jTextField20.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\battles\\global\\battlemapcoords.bin");
+        jTextField20.setText(".\\battlemapcoords.asm");
         jTextField20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField20ActionPerformed(evt);
@@ -217,7 +222,7 @@ public class MainEditor extends javax.swing.JFrame {
             }
         });
 
-        jTextField22.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\graphics\\maps\\maptilesets\\maptileset");
+        jTextField22.setText("..\\..\\graphics\\maps\\maptilesets\\maptileset");
         jTextField22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField22ActionPerformed(evt);
@@ -242,7 +247,7 @@ public class MainEditor extends javax.swing.JFrame {
             }
         });
 
-        jTextField21.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\graphics\\maps\\mappalettes\\mappalette");
+        jTextField21.setText("..\\..\\graphics\\maps\\mappalettes\\mappalette");
         jTextField21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField21ActionPerformed(evt);
@@ -258,7 +263,7 @@ public class MainEditor extends javax.swing.JFrame {
             }
         });
 
-        jTextField23.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\");
+        jTextField23.setText("..\\..\\..\\");
             jTextField23.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jTextField23ActionPerformed(evt);
@@ -354,7 +359,7 @@ public class MainEditor extends javax.swing.JFrame {
 
             jLabel22.setText("Battle Map Coords :");
 
-            jTextField15.setText("D:\\SEGADEV\\GITHUB\\SF2DISASM\\disasm\\data\\battles\\global\\newbattlemapcoords.bin");
+            jTextField15.setText(".\\newbattlemapcoords.asm");
             jTextField15.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jTextField15ActionPerformed(evt);
@@ -534,7 +539,7 @@ public class MainEditor extends javax.swing.JFrame {
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
 
-        battlemapcoordsManager.importDisassembly(jTextField21.getText(),jTextField22.getText(),jTextField23.getText(),jTextField19.getText(),jTextField20.getText());
+        battlemapcoordsManager.importDisassembly(jTextField23.getText(),jTextField19.getText(),jTextField20.getText());
       
         final BattleMapCoords[] coords = battlemapcoordsManager.getCoords();
         selectedCoords = 1;
@@ -563,7 +568,7 @@ public class MainEditor extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if(selectedRow!=jTable1.getSelectedRow()){
-                    System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+                    System.out.println(jTable1.getValueAt(jTable1.getSelectedRow(), 0));
                     selectedRow = jTable1.getSelectedRow();
                     selectedCoords = selectedRow;
                     if(jTable1.getValueAt(selectedRow, 0)!=null){

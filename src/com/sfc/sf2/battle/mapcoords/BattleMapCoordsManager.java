@@ -5,14 +5,8 @@
  */
 package com.sfc.sf2.battle.mapcoords;
 
-import com.sfc.sf2.graphics.GraphicsManager;
-import com.sfc.sf2.graphics.Tile;
-import com.sfc.sf2.map.block.MapBlock;
-import com.sfc.sf2.map.block.MapBlockManager;
 import com.sfc.sf2.battle.mapcoords.io.DisassemblyManager;
 import com.sfc.sf2.map.layout.MapLayoutManager;
-import com.sfc.sf2.palette.PaletteManager;
-import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +23,7 @@ public class BattleMapCoordsManager {
     private MapLayoutManager mapLayoutManager = null;
     private String[][] mapEntries = null;
     
-    public void importDisassembly(String palettesPath, String tilesetsPath, String basePath, String mapEntriesPath, String battleMapCoordsPath){
+    public void importDisassembly(String basePath, String mapEntriesPath, String battleMapCoordsPath){
         System.out.println("com.sfc.sf2.battlemapcoords.BattleMapCoordsManager.importDisassembly() - Importing disassembly ...");
         disassemblyManager = new DisassemblyManager();
         mapEntries = importMapEntryFile(basePath, mapEntriesPath);
@@ -37,7 +31,7 @@ public class BattleMapCoordsManager {
         System.out.println("com.sfc.sf2.battlemapcoords.BattleMapCoordsManager.importDisassembly() - Disassembly imported.");
     }
     
-    public void importDisassembly(String palettesPath, String tilesetsPath, String battleMapCoordsPath){
+    public void importDisassembly(String battleMapCoordsPath){
         System.out.println("com.sfc.sf2.battlemapcoords.BattleMapCoordsManager.importDisassembly() - Importing disassembly ...");
         disassemblyManager = new DisassemblyManager();
         coords = disassemblyManager.importDisassembly(battleMapCoordsPath);

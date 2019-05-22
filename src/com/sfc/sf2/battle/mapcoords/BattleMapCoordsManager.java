@@ -80,7 +80,7 @@ public class BattleMapCoordsManager {
                         while(mapScan.hasNext()){
                             String mapline = mapScan.nextLine();
                             if(mapline.startsWith(mapPointer)){
-                                while(mapScan.hasNext()&&!mapline.contains("incbin")){
+                                while(mapScan.hasNext()&&!mapline.contains("include")){
                                     mapline = mapScan.nextLine();
                                 }
                                 String tilesetsPath = mapline.substring(mapline.indexOf("\"")+1, mapline.lastIndexOf("\""));

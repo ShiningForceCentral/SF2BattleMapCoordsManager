@@ -29,7 +29,7 @@ import java.util.Scanner;
  */
 public class DisassemblyManager {
     
-    private static final String MACRO_LABEL = "battleMapCoords";
+    private static final String MACRO_LABEL = "battleMapCoordinates";
     
     private static String header;
     
@@ -59,7 +59,7 @@ public class DisassemblyManager {
                 if(line.trim().startsWith(MACRO_LABEL)){
                     inHeader = false;
                     /*  ; Map, X, Y, Width, Height, Trigger X, Trigger Y
-                        battleMapCoords 63, 0, 12, 32, 36, 255, 255
+                        battleMapCoordinates 63, 0, 12, 32, 36, 255, 255
                     */
                     String[] params = line.trim().substring(MACRO_LABEL.length()).trim().split(",");
                     int map = Integer.valueOf(params[0].trim());

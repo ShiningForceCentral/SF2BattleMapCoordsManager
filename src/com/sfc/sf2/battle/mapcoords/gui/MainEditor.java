@@ -10,6 +10,7 @@ import com.sfc.sf2.map.block.gui.BlockSlotPanel;
 import com.sfc.sf2.map.block.layout.MapBlockLayout;
 import com.sfc.sf2.battle.mapcoords.BattleMapCoordsManager;
 import com.sfc.sf2.battle.mapcoords.layout.BattleMapCoordsLayout;
+import com.sfc.sf2.map.layout.DisassemblyException;
 import com.sfc.sf2.map.layout.MapLayoutManager;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
@@ -549,8 +550,11 @@ public class MainEditor extends javax.swing.JFrame {
         
         final MapLayoutManager mapLayoutManager = new MapLayoutManager();
         battlemapcoordsManager.setMapLayoutManager(mapLayoutManager);
-        mapLayoutManager.importDisassembly(jTextField21.getText(), jTextField22.getText(), mapEntries[selectedMapIndex][0], mapEntries[selectedMapIndex][1], mapEntries[selectedMapIndex][2]);
-        
+        try {
+            mapLayoutManager.importDisassembly(jTextField21.getText(), jTextField22.getText(), mapEntries[selectedMapIndex][0], mapEntries[selectedMapIndex][1], mapEntries[selectedMapIndex][2]);
+        } catch (DisassemblyException ex) {
+            Logger.getLogger(MainEditor.class.getName()).log(Level.SEVERE, null, ex);
+        }        
         jPanel2.removeAll();       
         jPanel2.setLayout(new GridLayout(1,1));
         
@@ -573,7 +577,11 @@ public class MainEditor extends javax.swing.JFrame {
                     selectedCoords = selectedRow;
                     if(jTable1.getValueAt(selectedRow, 0)!=null){
                         selectedMapIndex = (int)jTable1.getValueAt(selectedRow, 0);
-                        mapLayoutManager.importDisassembly(jTextField21.getText(), jTextField22.getText(), mapEntries[selectedMapIndex][0], mapEntries[selectedMapIndex][1], mapEntries[selectedMapIndex][2]);
+                        try {
+                            mapLayoutManager.importDisassembly(jTextField21.getText(), jTextField22.getText(), mapEntries[selectedMapIndex][0], mapEntries[selectedMapIndex][1], mapEntries[selectedMapIndex][2]);
+                        } catch (DisassemblyException ex) {
+                            Logger.getLogger(MainEditor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         battlemapcoordsLayout.setMapLayout(mapLayoutManager.getLayout());
                         battlemapcoordsLayout.setBlockset(mapLayoutManager.getBlockset());
                         battlemapcoordsLayout.setCoords(((BattleMapCoordsTableModel)jTable1.getModel()).getCoords()[selectedCoords]);
